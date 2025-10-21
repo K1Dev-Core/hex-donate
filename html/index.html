@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RedM Donation System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg">
+        <!-- Character and Speech -->
+        <div class="character-section">
+            <div class="character-image">
+                <img src="./images/char.png" alt="Character" class="char-img">
+            </div>
+            <div class="speech-bubble">
+                <div class="speech-text">
+                    <p>"ยินดีต้อนรับสู่ระบบบริจาคกองทุนเซิร์ฟเวอร์ RedM!"</p>
+                    <p>"การบริจาคของคุณจะช่วยพัฒนาสิ่งอำนวยความสะดวกและฟีเจอร์ใหม่ๆ ให้กับเซิร์ฟเวอร์"</p>
+                    <p>"ขอบคุณสำหรับการสนับสนุนครับ!"</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="donation-container">
+            <!-- Main Content -->
+            <div class="donation-main">
+                <!-- Left Side - Fund Information -->
+                <div class="donation-left">
+                    <div class="fund-info">
+                        <div class="fund-name">กองทุนพัฒนาเซิร์ฟเวอร์</div>
+                        <div class="fund-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                            <div class="progress-text">
+                                <span class="current-amount">฿65,000</span>
+                                <span class="target-amount">/ ฿100,000</span>
+                            </div>
+                        </div>
+                        <div class="fund-percentage">65%</div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Donation Form -->
+                <div class="donation-right">
+                    <div class="donation-form">
+                        <div class="df-title">บริจาคเงิน</div>
+                        <div class="df-input-group">
+                            <input type="number" class="donation-amount" placeholder="จำนวนเงิน" min="1" step="1">
+                            <span class="currency">฿</span>
+                        </div>
+                        <button class="donate-btn">บริจาค</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Section -->
+            <div class="donation-bottom">
+                <!-- Left - Top Donators -->
+                <div class="top-donators">
+                    <div class="td-title">อันดับผู้บริจาค</div>
+                    <div class="td-list">
+                        <div class="td-item">
+                            <span class="td-rank">1</span>
+                            <span class="td-name">Player_001</span>
+                            <span class="td-amount">฿15,000</span>
+                        </div>
+                        <div class="td-item">
+                            <span class="td-rank">2</span>
+                            <span class="td-name">Player_002</span>
+                            <span class="td-amount">฿12,000</span>
+                        </div>
+                        <div class="td-item">
+                            <span class="td-rank">3</span>
+                            <span class="td-name">Player_003</span>
+                            <span class="td-amount">฿8,500</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right - Recent Donations -->
+                <div class="recent-donations">
+                    <div class="rd-title">การบริจาคล่าสุด</div>
+                    <div class="rd-list">
+                        <div class="rd-item">
+                            <span class="rd-name">Player_004</span>
+                            <span class="rd-amount">฿2,500</span>
+                            <span class="rd-time">2 นาทีที่แล้ว</span>
+                        </div>
+                        <div class="rd-item">
+                            <span class="rd-name">Player_005</span>
+                            <span class="rd-amount">฿1,200</span>
+                            <span class="rd-time">5 นาทีที่แล้ว</span>
+                        </div>
+                        <div class="rd-item">
+                            <span class="rd-name">Player_006</span>
+                            <span class="rd-amount">฿3,000</span>
+                            <span class="rd-time">8 นาทีที่แล้ว</span>
+                        </div>
+                        <div class="rd-item">
+                            <span class="rd-name">Player_007</span>
+                            <span class="rd-amount">฿1,800</span>
+                            <span class="rd-time">12 นาทีที่แล้ว</span>
+                        </div>
+                        <div class="rd-item">
+                            <span class="rd-name">Player_008</span>
+                            <span class="rd-amount">฿4,200</span>
+                            <span class="rd-time">15 นาทีที่แล้ว</span>
+                        </div>
+                        <div class="rd-item">
+                            <span class="rd-name">Player_009</span>
+                            <span class="rd-amount">฿950</span>
+                            <span class="rd-time">18 นาทีที่แล้ว</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
