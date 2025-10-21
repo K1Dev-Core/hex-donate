@@ -24,6 +24,41 @@ function DonationServer:writeJSONData(filename, data)
     SaveResourceFile(GetCurrentResourceName(), filename, json.encode(data), -1)
 end
 
+function DonationServer:getWebhookForPoint(pointId, webhookType)
+    for _, webhook in pairs(Config.DiscordWebhooks) do
+        if webhook.id == pointId then
+            if webhookType == "donation" then
+                return webhook.donationWebhook
+            elseif webhookType == "goal" then
+                return webhook.goalCompleteWebhook
+            end
+        end
+    end
+    return nil
+end
+
+function DonationServer:sendDiscordWebhook(webhookUrl, title, description, color, fields)
+    if not webhookUrl or webhookUrl == "YOUR_DONATION_WEBHOOK_URL_HERE" or webhookUrl == "YOUR_GOAL_COMPLETE_WEBHOOK_URL_HERE" then
+        return
+    end
+    
+    local embed = {
+        {
+            ["title"] = title,
+            ["description"] = description,
+            ["color"] = color,
+            ["fields"] = fields,
+            ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%SZ")
+        }
+    }
+    
+    local payload = {
+        ["embeds"] = embed
+    }
+    
+    PerformHttpRequest(webhookUrl, function(err, text, headers) end, 'POST', json.encode(payload), {['Content-Type'] = 'application/json'})
+end
+
 function DonationServer:getPlayerFromId(src)
     local user = Core.getUser(src)
     if not user then return false end
@@ -132,6 +167,8 @@ function DonationServer:makeDonation(src, amount)
     
     self.donationData[self.currentDonationPoint].currentAmount = newAmount
     
+    local wasGoalReached = (newAmount >= donationPoint.maxAmount)
+    
     local donationRecord = {
         playerName = player.name,
         amount = actualDonation,
@@ -169,6 +206,66 @@ function DonationServer:makeDonation(src, amount)
     end
     
     self:writeJSONData('donation_data.json', self.donationData)
+    
+    local donationWebhook = self:getWebhookForPoint(self.currentDonationPoint, "donation")
+    if donationWebhook then
+        local fields = {
+            {
+                ["name"] = "ผู้บริจาค",
+                ["value"] = player.name,
+                ["inline"] = true
+            },
+            {
+                ["name"] = "จำนวนเงิน",
+                ["value"] = "$" .. actualDonation,
+                ["inline"] = true
+            },
+            {
+                ["name"] = "ความคืบหน้า",
+                ["value"] = newAmount .. "/" .. donationPoint.maxAmount,
+                ["inline"] = true
+            }
+        }
+        
+        self:sendDiscordWebhook(
+            donationWebhook,
+            "💰 การบริจาคใหม่",
+            "มีผู้บริจาคเงินให้กับ **" .. donationPoint.name .. "**",
+            65280,
+            fields
+        )
+    end
+    
+    if wasGoalReached then
+        local goalWebhook = self:getWebhookForPoint(self.currentDonationPoint, "goal")
+        if goalWebhook then
+            local fields = {
+                {
+                    ["name"] = "กองทุน",
+                    ["value"] = donationPoint.name,
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "จำนวนเงินที่ครบ",
+                    ["value"] = "$" .. donationPoint.maxAmount,
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "ผู้บริจาคคนสุดท้าย",
+                    ["value"] = player.name,
+                    ["inline"] = true
+                }
+            }
+            
+            self:sendDiscordWebhook(
+                goalWebhook,
+                "🎉 เป้าหมายการบริจาคครบแล้ว!",
+                "**" .. donationPoint.name .. "** ได้รับการบริจาคครบตามเป้าหมายแล้ว!",
+                16776960,
+                fields
+            )
+        end
+    end
     
     TriggerClientEvent('hex-donate:updateProgress', src, {
         currentAmount = newAmount,
