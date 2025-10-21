@@ -30,6 +30,18 @@ Config.DonationPoints = {
         interactionDistance = 3.0
     },
 }
+Config.DiscordWebhooks = {
+    {
+        id = "point_1", -- ID ของจุดบริจาค
+        donationWebhook = "YOUR_DONATION_WEBHOOK_URL_HERE", -- Webhook URL ของการบริจาค
+        goalCompleteWebhook = "YOUR_GOAL_COMPLETE_WEBHOOK_URL_HERE" -- Webhook URL ของการบริจาคครบ
+    },
+    {
+        id = "point_2", 
+        donationWebhook = "YOUR_DONATION_WEBHOOK_URL_HERE",
+        goalCompleteWebhook = "YOUR_GOAL_COMPLETE_WEBHOOK_URL_HERE"
+    }
+}
 
 Config.TextUI = {
     enabled = true,
@@ -46,3 +58,4 @@ Config.Notifications = {
     insufficient = "เงินไม่เพียงพอ",
     invalid = "จำนวนเงินไม่ถูกต้อง"
 }
+
