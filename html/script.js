@@ -39,6 +39,14 @@ function openDonationUI(data) {
     if (charImg && data.characterImage) {
         charImg.src = data.characterImage;
         charImg.alt = "Character";
+   
+        if (percentage >= 100) {
+            charImg.classList.add('colored');
+            charImg.style.filter = '';
+        } else {
+            charImg.classList.remove('colored');
+            charImg.style.filter = `grayscale(${100 - percentage}%)`;
+        }
     }
     
     updateTopDonators(data.topDonators);
@@ -94,7 +102,13 @@ function openDonationUI(data) {
 }
 
 function closeDonationUI() {
-    document.querySelector('.bg').style.display = 'none';
+    const container = document.querySelector('.donation-container');
+    container.classList.add('closing');
+    
+    setTimeout(() => {
+        document.querySelector('.bg').style.display = 'none';
+        container.classList.remove('closing');
+    }, 400);
 }
 
 function updateDonationProgress(data) {
@@ -104,6 +118,17 @@ function updateDonationProgress(data) {
     const percentage = Math.min((data.currentAmount / data.maxAmount) * 100, 100);
     document.querySelector('.progress-fill').style.width = `${percentage}%`;
     document.querySelector('.fund-percentage').textContent = `${Math.round(percentage)}%`;
+
+    const charImg = document.querySelector('.char-img');
+    if (charImg) {
+        if (percentage >= 100) {
+            charImg.classList.add('colored');
+            charImg.style.filter = '';
+        } else {
+            charImg.classList.remove('colored');
+            charImg.style.filter = `grayscale(${100 - percentage}%)`;
+        }
+    }
     
     updateTopDonators(data.topDonators);
     updateRecentDonations(data.recentDonations);
@@ -353,7 +378,15 @@ function showTextUI(data) {
 function hideTextUI() {
     const textUI = document.getElementById('textui-container');
     if (textUI) {
-        textUI.remove();
+        const textuiBox = textUI.querySelector('.textui-box');
+        if (textuiBox) {
+            textuiBox.classList.add('hiding');
+            setTimeout(() => {
+                textUI.remove();
+            }, 200);
+        } else {
+            textUI.remove();
+        }
     }
 }
 
@@ -370,5 +403,11 @@ document.addEventListener('keydown', function(event) {
 });
 
 function closeDonationUI() {
-    document.querySelector('.bg').style.display = 'none';
+    const container = document.querySelector('.donation-container');
+    container.classList.add('closing');
+    
+    setTimeout(() => {
+        document.querySelector('.bg').style.display = 'none';
+        container.classList.remove('closing');
+    }, 400);
 }

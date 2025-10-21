@@ -31,13 +31,40 @@ body {
 
 .textui-box {
     background: rgba(0, 0, 0, 0.758);
-
     padding: 8px 16px;
     display: flex;
     align-items: center;
     gap: 6px;
     position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: textuiFadeUp 0.3s ease-out forwards;
+}
 
+@keyframes textuiFadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes textuiFadeDown {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+.textui-box.hiding {
+    animation: textuiFadeDown 0.2s ease-in forwards;
 }
 
 .textui-content {
@@ -100,6 +127,7 @@ textarea {
 
 .bg{
 	display: none;
+    background: #0000008f;
 	
 	width:100%;
 	height:100%;
@@ -1498,8 +1526,14 @@ textarea {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	object-position: center;
+	filter: grayscale(100%);
+	transition: filter 0.5s ease;
 }
+
+.char-img.colored {
+	filter: grayscale(0%) !important;
+}
+
 
 .speech-bubble {
 	position: relative;
@@ -1558,15 +1592,42 @@ textarea {
 	height: 75%;
 	max-height: 700px;
 	position: absolute;
-	left: 40%;
+	left: 45%;
 	top: 50%;
-	translate: -50% -50%;
+	transform: translate(-50%, -50%);
 	display: flex;
 	flex-direction: column;
 	background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
-
-
 	padding: 1.2em;
+	opacity: 0;
+	scale: 0.3;
+	animation: menuOpen 0.6s ease-out forwards;
+}
+
+@keyframes menuOpen {
+	0% {
+		opacity: 0;
+		scale: 0.3;
+	}
+	100% {
+		opacity: 1;
+		scale: 1;
+	}
+}
+
+@keyframes menuClose {
+	0% {
+		opacity: 1;
+		scale: 1;
+	}
+	100% {
+		opacity: 0;
+		scale: 0.3;
+	}
+}
+
+.donation-container.closing {
+	animation: menuClose 0.4s ease-in forwards;
 }
 
 .donation-header {
